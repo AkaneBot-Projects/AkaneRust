@@ -1,0 +1,40 @@
+# ── Build output ──────────────────────────────────────────────────────────────
+/target/
+/debug/
+/release/
+
+# ── Cargo lock (keep untuk binary projects) ───────────────────────────────────
+# Cargo.lock  # uncomment jika library
+
+# ── Session & database ────────────────────────────────────────────────────────
+*.db
+*.db-shm
+*.db-wal
+whatsapp.db
+whatsapp.db-shm
+whatsapp.db-wal
+
+# ── Config sensitif ───────────────────────────────────────────────────────────
+config.toml
+.env
+.env.local
+.env.*.local
+
+# ── Log ───────────────────────────────────────────────────────────────────────
+*.log
+logs/
+
+# ── Temp files dari eval ──────────────────────────────────────────────────────
+/tmp/akane_*
+
+# ── IDE ───────────────────────────────────────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# ── Rust ──────────────────────────────────────────────────────────────────────
+**/*.rs.bk
