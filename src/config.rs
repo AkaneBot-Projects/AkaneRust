@@ -24,12 +24,9 @@ pub struct AuthConfig {
 #[derive(Debug, Clone, Deserialize)]
 pub struct OwnerConfig {
     pub name:   String,
-    /// Nomor HP owner (format internasional, tanpa +)
+    /// Nomor HP owner format internasional tanpa + (contoh: 6285691464024)
+    /// Handler resolve LID → PN otomatis sebelum sampai sini.
     pub number: String,
-    /// LID WhatsApp owner — diisi jika sender pakai format @lid
-    /// Dapatkan dari: kirim ".id", ambil angka sebelum "@lid"
-    #[serde(default)]
-    pub lid:    String,
 }
 
 impl Config {
@@ -57,24 +54,9 @@ impl Config {
 
 impl OwnerConfig {
     /// Cek apakah sender adalah owner.
-    ///
-    /// Mendukung dua format sender JID:
-    ///   - `6285691464024@s.whatsapp.net` → bandingkan dengan `number`
-    ///   - `227835566395639@lid`          → bandingkan dengan `lid`
+    /// Sender sudah di-resolve dari LID ke PN di handler sebelum dipanggil.
     pub fn is_owner(&self, sender_jid: &str) -> bool {
-        // Ambil bagian sebelum "@"
-        let id_part = sender_jid.split('@').next().unwrap_or(sender_jid);
-
-        // Cek nomor HP
-        if !self.number.is_empty() && id_part == self.number.as_str() {
-            return true;
-        }
-
-        // Cek LID
-        if !self.lid.is_empty() && id_part == self.lid.as_str() {
-            return true;
-        }
-
-        false
+        let id = sender_jid.split('@').next().unwrap_or(sender_jid);
+        id == self.number.as_str()
     }
 }

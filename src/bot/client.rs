@@ -96,10 +96,9 @@ pub async fn send_contact(
     if let Err(e) = client.send_message(chat, msg).await {
         eprintln!("[err] send_contact: {e}");
 
-        // fallback ke text kalau gagal
         send_reply(
             client,
-            chat_clone,
+            chat_clone, // ✅ pakai clone
             quote,
             format!("{name}: {wa_number}")
         ).await;
